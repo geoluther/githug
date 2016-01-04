@@ -49,7 +49,7 @@ setup do
   Dir.chdir cwd
   `git remote add origin #{tmpdir}/.git`
   `git fetch --quiet origin`
-  `git branch -u origin/master master`
+  `git branch -u origin/master master 2> /dev/null`
 
   `git checkout master --quiet` #return to master branch
 end
@@ -60,7 +60,7 @@ solution do
 
   #each branch consits of one line, `wc -l counts the number of lines in order to get the number of remote branches`
   #At the moment Grit doesn't support remote branch references but is on the ToDo list.  This should be revisited when Grit implements the change
-  num_remote_branches = `git branch -r | wc -l`.to_i
+  num_remote_branches = `git branch -r`.split("\n").count
 
   # counts the number of commits in the remote master branch'
   remote_master_commits = repo.commits('origin/master').count

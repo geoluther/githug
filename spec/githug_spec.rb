@@ -68,7 +68,7 @@ describe "The Game" do
     `echo "*.swp" >> .gitignore`
     `githug`.should be_solved
   end
-  
+
   it "solves the include level" do
     `echo "*.a\n!lib.a" >> .gitignore`
     `githug`.should be_solved
@@ -231,6 +231,12 @@ describe "The Game" do
     `githug`.should be_solved
   end
 
+  it "solves the rebase level" do
+    `git checkout feature`
+    `git rebase master`
+    `githug`.should be_solved
+  end
+
   it "solves the repack level" do
     `git repack -d`
     `githug`.should be_solved
@@ -290,6 +296,11 @@ describe "The Game" do
 
   it "solves the conflict level" do
     skip_level
+  end
+
+  it "solves the submodule level" do
+      `git submodule add https://github.com/jackmaney/githug-include-me`
+      `githug`.should be_solved
   end
 
   it "solves the contribute level" do
